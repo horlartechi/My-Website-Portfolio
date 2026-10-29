@@ -1,4 +1,3 @@
-
 :root {
     color-scheme: dark;
     --bg: #0b1120;
@@ -54,7 +53,10 @@ a {
     text-decoration: none;
 }
 
-button {
+button,
+input,
+select,
+textarea {
     font: inherit;
 }
 
@@ -62,6 +64,10 @@ button {
     width: min(1140px, 90%);
     margin-inline: auto;
 }
+
+/* ==============================
+   HEADER AND NAVIGATION
+============================== */
 
 .header {
     position: sticky;
@@ -109,7 +115,6 @@ button {
     border-radius: 6px;
 }
 
-
 .nav {
     display: flex;
     align-items: center;
@@ -144,7 +149,7 @@ button {
     transition: 1s;
 }
 
-.order-btn{
+.order-btn {
     display: none;
 }
 
@@ -179,11 +184,19 @@ button {
     font-weight: 600;
 }
 
+/* ==============================
+   HERO SECTION
+============================== */
+
 .hero {
     overflow: hidden;
     padding: 90px 0 100px;
     background:
-        radial-gradient(circle at 85% 18%, rgba(36, 87, 230, .10), transparent 30%),
+        radial-gradient(
+            circle at 85% 18%,
+            rgba(36, 87, 230, .10),
+            transparent 30%
+        ),
         var(--bg);
 }
 
@@ -339,6 +352,10 @@ button {
     pointer-events: none;
 }
 
+/* ==============================
+   GENERAL SECTIONS
+============================== */
+
 .section {
     padding: 95px 0;
 }
@@ -370,6 +387,16 @@ button {
     text-align: center;
     margin-inline: auto;
 }
+
+.section-label {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+/* ==============================
+   ABOUT SECTION
+============================== */
 
 .about-grid {
     display: grid;
@@ -434,6 +461,10 @@ button {
     font-size: 14px;
 }
 
+/* ==============================
+   SERVICES SECTION
+============================== */
+
 .services-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -486,6 +517,10 @@ button {
     margin-top: 15px;
 }
 
+/* ==============================
+   PROJECTS SECTION
+============================== */
+
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -536,6 +571,10 @@ button {
     margin-top: 8px;
 }
 
+/* ==============================
+   PROCESS SECTION
+============================== */
+
 .process-grid {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -554,11 +593,20 @@ button {
     margin-top: 12px;
 }
 
+/* ==============================
+   CONTACT SECTION
+============================== */
+
 .cta {
     padding: 85px 0;
     color: #fff;
     background: #163caa;
-    background-image: radial-gradient(circle at 90% 10%, rgba(255,255,255,.14), transparent 35%);
+    background-image:
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(255, 255, 255, .14),
+            transparent 35%
+        );
 }
 
 .cta-content {
@@ -572,15 +620,197 @@ button {
 
 .cta h2 {
     margin: 12px 0 18px;
+    color: #fff;
 }
 
 .cta-content > p:not(.section-label) {
     color: #e0e7ff;
 }
 
+.contact-intro {
+    max-width: 620px;
+    margin: 0 auto;
+}
+
+/* Main form container */
+
+.contact-form {
+    width: 100%;
+    max-width: 650px;
+    margin: 35px auto 0;
+    padding: 32px;
+    text-align: left;
+    background: rgba(8, 25, 72, .42);
+    border: 1px solid rgba(255, 255, 255, .2);
+    border-radius: 18px;
+    box-shadow: 0 20px 55px rgba(0, 0, 0, .14);
+}
+
+/* Two-column name fields */
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+/* Form groups */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 21px;
+}
+
+.form-group label {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* Inputs, dropdown and message box */
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    padding: 13px 14px;
+    color: #fff;
+    background: rgba(7, 17, 48, .58);
+    border: 1px solid rgba(255, 255, 255, .25);
+    border-radius: 9px;
+    outline: none;
+    font-size: 14px;
+    line-height: 1.5;
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+.form-group input,
+.form-group select {
+    min-height: 49px;
+}
+
+.form-group textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #b8c6e6;
+    opacity: 1;
+}
+
+/* Dropdown options */
+
+.form-group select {
+    cursor: pointer;
+}
+
+.form-group select option {
+    color: #101828;
+    background: #fff;
+}
+
+/* Keyboard focus */
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #cbd8ff;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, .13);
+    background: rgba(7, 17, 48, .8);
+}
+
+/* Invalid fields */
+
+.form-group input:invalid:not(:placeholder-shown),
+.form-group textarea:invalid:not(:placeholder-shown) {
+    border-color: #ffb4b4;
+}
+
+/* Submit button */
+
+.submit-btn {
+    width: 100%;
+    min-height: 50px;
+    border: none;
+    cursor: pointer;
+    margin-top: 4px;
+    font-size: 15px;
+}
+
+.submit-btn:hover {
+    background: #edf2ff;
+}
+
+.submit-btn:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 4px;
+}
+
+.submit-btn:disabled {
+    opacity: .7;
+    cursor: wait;
+    transform: none;
+}
+
+/* Form submission status */
+
+.form-status {
+    display: none;
+    margin: 0 0 18px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.6;
+    text-align: left;
+    overflow-wrap: anywhere;
+}
+
+.form-status.is-visible {
+    display: block;
+}
+
+.form-status.is-success {
+    color: #d1fae5;
+    background: rgba(6, 95, 70, .4);
+    border: 1px solid rgba(167, 243, 208, .5);
+}
+
+.form-status.is-error {
+    color: #fee2e2;
+    background: rgba(153, 27, 27, .35);
+    border: 1px solid rgba(254, 202, 202, .5);
+}
+
+.form-status.is-info {
+    color: #dbeafe;
+    background: rgba(30, 64, 175, .35);
+    border: 1px solid rgba(191, 219, 254, .4);
+}
+
+/* Alternative contact methods */
+
+.contact-alternative {
+    margin-top: 28px;
+}
+
+.contact-alternative > p {
+    color: #e0e7ff;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
 .cta-buttons {
     justify-content: center;
-    margin: 28px 0 0;
+    margin: 18px 0 0;
 }
 
 .white-btn {
@@ -590,8 +820,17 @@ button {
 
 .outline-btn {
     color: #fff;
-    border: 1px solid rgba(255,255,255,.6);
+    border: 1px solid rgba(255, 255, 255, .6);
+    background: transparent;
 }
+
+.outline-btn:hover {
+    background: rgba(255, 255, 255, .1);
+}
+
+/* ==============================
+   FOOTER
+============================== */
 
 .footer {
     padding: 40px 0 20px;
@@ -632,7 +871,10 @@ button {
     font-size: 12px;
 }
 
-/* Scroll reveal animations */
+/* ==============================
+   SCROLL REVEAL ANIMATIONS
+============================== */
+
 .reveal {
     opacity: 0;
     transform: translateY(18px);
@@ -643,6 +885,10 @@ button {
     opacity: 1;
     transform: translateY(0);
 }
+
+/* ==============================
+   TABLET RESPONSIVENESS
+============================== */
 
 @media (max-width: 1000px) {
     .nav {
@@ -667,6 +913,10 @@ button {
     }
 }
 
+/* ==============================
+   MOBILE RESPONSIVENESS
+============================== */
+
 @media (max-width: 760px) {
     .nav-container {
         min-height: 72px;
@@ -689,7 +939,7 @@ button {
         box-shadow: var(--shadow);
         flex-direction: column;
         align-items: flex-start;
-        gap: 18px;
+        gap: 12px;
     }
 
     .nav.active {
@@ -702,10 +952,12 @@ button {
         font-size: 12px;
     }
 
-     .order-btn {
+    .order-btn {
         display: block;
         width: fit-content;
         padding: 12px 24px;
+        margin: 10px auto !important;
+        flex-shrink: 0;
         background-color: #052c6b;
         color: #ffffff !important;
         opacity: 1;
@@ -716,20 +968,11 @@ button {
         text-decoration: none;
     }
 
-    /* Fix mobile navigation spacing */
-.nav {
-    gap: 12px;
-}
+    .order-btn:hover {
+        background-color: #051535;
+        transition: background-color .3s ease;
+    }
 
-.order-btn {
-    margin: 10px auto !important;
-    flex-shrink: 0;
-}
-
-.order-btn:hover {
-    background-color: #051535;
-    transition: background-color 0.3s ease;
-}
     .theme-toggle {
         padding: 5px 12px;
     }
@@ -783,7 +1026,15 @@ button {
         align-items: flex-start;
         flex-direction: column;
     }
+
+    .contact-form {
+        padding: 25px;
+    }
 }
+
+/* ==============================
+   SMALL MOBILE SCREENS
+============================== */
 
 @media (max-width: 480px) {
     .container {
@@ -795,7 +1046,7 @@ button {
         gap: 6px;
     }
 
-    .logo span img {
+    .logo span {
         width: 34px;
         height: 34px;
     }
@@ -841,7 +1092,40 @@ button {
     .social-links {
         gap: 16px;
     }
+
+    .cta {
+        padding: 65px 0;
+    }
+
+    .contact-form {
+        padding: 20px 16px;
+        margin-top: 28px;
+        border-radius: 14px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 16px;
+    }
+
+    .submit-btn {
+        font-size: 14px;
+    }
 }
+
+/* ==============================
+   REDUCED MOTION ACCESSIBILITY
+============================== */
 
 @media (prefers-reduced-motion: reduce) {
     *,

@@ -201,4 +201,77 @@ document.addEventListener("DOMContentLoaded", () => {
             sectionObserver.observe(section);
         });
     }
+
+    // ========================================
+    // PROJECT CONTACT FORM
+    // ========================================
+
+    const contactForm = document.getElementById("projectContactForm");
+    const formStatus = document.getElementById("formStatus");
+
+    if (contactForm && formStatus) {
+        const submitButton = contactForm.querySelector(
+            'button[type="submit"]'
+        );
+
+        const originalButtonText = submitButton
+            ? submitButton.textContent.trim()
+            : "Send Project Enquiry";
+
+        contactForm.addEventListener("submit", async event => {
+            event.preventDefault();
+
+            // Check the form before sending.
+            if (!contactForm.checkValidity()) {
+                contactForm.reportValidity();
+                return;
+            }
+
+            // Show the sending message.
+            formStatus.textContent = "Sending your enquiry...";
+            formStatus.className = "form-status is-visible is-info";
+
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = "Sending...";
+            }
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: "POST",
+                    body: new FormData(contactForm),
+                    headers: {
+                        Accept: "application/json"
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error("The form submission failed.");
+                }
+
+                // Show success without leaving the page.
+                formStatus.textContent =
+                    "Thank you! Your enquiry has been sent successfully. I'll get back to you soon.";
+
+                formStatus.className = "form-status is-visible is-success";
+
+                // Clear the form after successful submission.
+                contactForm.reset();
+
+            } catch (error) {
+                console.error("Contact form error:", error);
+
+                formStatus.textContent =
+                    "Sorry, your enquiry could not be sent. Please try again or contact me directly by WhatsApp or email.";
+
+                formStatus.className = "form-status is-visible is-error";
+
+            } finally {
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.textContent = originalButtonText;
+                }
+            }
+        });
+    }
 });
