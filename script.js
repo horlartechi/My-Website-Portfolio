@@ -4,21 +4,32 @@ document.addEventListener("DOMContentLoaded", () => {
     const menuBtn = document.getElementById("menuBtn");
     const navContainer = document.querySelector(".nav-container");
 
-    // Restore the saved theme. Light mode is the default.
-    body.dataset.theme =
-        localStorage.getItem("portfolio-theme") === "dark" ? "dark" : "light";
+    // ========================================
+    // THEME: DARK BY DEFAULT
+    // ========================================
 
-    // Add the theme button without changing the HTML structure.
+    let savedTheme = null;
+
+    try {
+        savedTheme = localStorage.getItem("portfolio-theme");
+    } catch (error) {
+        console.warn("Could not read saved theme preference.");
+    }
+
+    body.dataset.theme = savedTheme === "light" ? "light" : "dark";
+
+    // Create the theme toggle button.
     if (navContainer && !document.querySelector(".theme-toggle")) {
         const themeBtn = document.createElement("button");
 
         themeBtn.type = "button";
         themeBtn.className = "theme-toggle";
-        themeBtn.innerHTML =
-            '<span class="theme-icon" aria-hidden="true"></span>' +
-            '<span class="theme-label"></span>';
+        themeBtn.innerHTML = `
+            <span class="theme-icon" aria-hidden="true"></span>
+            <span class="theme-label"></span>
+        `;
 
-        if (menuBtn) {
+        if (menuBtn && menuBtn.parentElement === navContainer) {
             navContainer.insertBefore(themeBtn, menuBtn);
         } else {
             navContainer.appendChild(themeBtn);
@@ -27,12 +38,19 @@ document.addEventListener("DOMContentLoaded", () => {
         function updateThemeButton() {
             const dark = body.dataset.theme === "dark";
 
-            themeBtn.querySelector(".theme-icon").textContent = dark ? "☀" : "☾";
+            themeBtn.querySelector(".theme-icon").textContent =
+                dark ? "☀" : "☾";
+
             themeBtn.querySelector(".theme-label").textContent =
                 dark ? "Light mode" : "Dark mode";
 
             themeBtn.setAttribute(
                 "aria-label",
+                dark ? "Switch to light mode" : "Switch to dark mode"
+            );
+
+            themeBtn.setAttribute(
+                "title",
                 dark ? "Switch to light mode" : "Switch to dark mode"
             );
         }
@@ -44,13 +62,35 @@ document.addEventListener("DOMContentLoaded", () => {
                 body.dataset.theme === "dark" ? "light" : "dark";
 
             body.dataset.theme = nextTheme;
-            localStorage.setItem("portfolio-theme", nextTheme);
+
+            try {
+                localStorage.setItem("portfolio-theme", nextTheme);
+            } catch (error) {
+                console.warn("Could not save theme preference.");
+            }
+
             updateThemeButton();
         });
     }
 
-    // Mobile menu.
+    // ========================================
+    // MOBILE NAVIGATION
+    // ========================================
+
     if (menuBtn && nav) {
+        menuBtn.setAttribute("aria-expanded", "false");
+        menuBtn.setAttribute("aria-label", "Open navigation menu");
+
+        function closeMenu() {
+            nav.classList.remove("active");
+            menuBtn.textContent = "☰";
+            menuBtn.setAttribute("aria-expanded", "false");
+            menuBtn.setAttribute(
+                "aria-label",
+                "Open navigation menu"
+            );
+        }
+
         menuBtn.addEventListener("click", () => {
             const open = nav.classList.toggle("active");
 
@@ -63,11 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         nav.querySelectorAll("a").forEach(link => {
-            link.addEventListener("click", () => {
-                nav.classList.remove("active");
-                menuBtn.textContent = "☰";
-                menuBtn.setAttribute("aria-expanded", "false");
-            });
+            link.addEventListener("click", closeMenu);
         });
 
         document.addEventListener("click", event => {
@@ -76,17 +112,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 !nav.contains(event.target) &&
                 !menuBtn.contains(event.target)
             ) {
-                nav.classList.remove("active");
-                menuBtn.textContent = "☰";
-                menuBtn.setAttribute("aria-expanded", "false");
+                closeMenu();
+            }
+        });
+
+        // Close the mobile menu when returning to desktop width.
+        window.addEventListener("resize", () => {
+            if (window.innerWidth > 760) {
+                closeMenu();
             }
         });
     }
 
-    // Reveal elements as they enter the screen.
+    // ========================================
+    // SCROLL REVEAL ANIMATIONS
+    // ========================================
+
     const animated = document.querySelectorAll(
         ".hero-text, .hero-image, .section-heading, .about-grid, " +
-        ".service-card, .project-card, .process-card, .cta-content, .footer-content"
+        ".service-card, .project-card, .process-card, " +
+        ".cta-content, .footer-content"
     );
 
     const reducedMotion = window.matchMedia(
@@ -94,42 +139,66 @@ document.addEventListener("DOMContentLoaded", () => {
     ).matches;
 
     if ("IntersectionObserver" in window && !reducedMotion) {
-        animated.forEach(element => element.classList.add("reveal"));
+        animated.forEach(element => {
+            element.classList.add("reveal");
+        });
 
-        const observer = new IntersectionObserver(entries => {
+        const revealObserver = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add("visible");
-                    observer.unobserve(entry.target);
+                    revealObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.12 });
+        }, {
+            threshold: 0.12
+        });
 
-        animated.forEach(element => observer.observe(element));
+        animated.forEach(element => {
+            revealObserver.observe(element);
+        });
+    } else {
+        animated.forEach(element => {
+            element.classList.add("visible");
+        });
     }
 
-    // Current year in the footer.
-    const year = document.getElementById("year");
-    if (year) year.textContent = new Date().getFullYear();
+    // ========================================
+    // AUTOMATIC FOOTER YEAR
+    // ========================================
 
-    // Highlight the navigation link for the section being viewed.
+    const year = document.getElementById("year");
+
+    if (year) {
+        year.textContent = new Date().getFullYear();
+    }
+
+    // ========================================
+    // ACTIVE NAVIGATION LINK
+    // ========================================
+
     const sections = document.querySelectorAll("main section[id]");
     const links = document.querySelectorAll(".nav a[href^='#']");
 
-    if ("IntersectionObserver" in window) {
+    if ("IntersectionObserver" in window && sections.length) {
         const sectionObserver = new IntersectionObserver(entries => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    links.forEach(link => {
-                        link.classList.toggle(
-                            "active-link",
-                            link.getAttribute("href") === "#" + entry.target.id
-                        );
-                    });
-                }
-            });
-        }, { rootMargin: "-35% 0px -55% 0px" });
+                if (!entry.isIntersecting) return;
 
-        sections.forEach(section => sectionObserver.observe(section));
+                links.forEach(link => {
+                    const isActive =
+                        link.getAttribute("href") ===
+                        "#" + entry.target.id;
+
+                    link.classList.toggle("active-link", isActive);
+                });
+            });
+        }, {
+            rootMargin: "-35% 0px -55% 0px"
+        });
+
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
     }
 });

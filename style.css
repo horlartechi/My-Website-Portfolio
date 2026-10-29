@@ -1,29 +1,28 @@
-/* Idris Ganiyu Portfolio — no Tailwind required */
 
 :root {
+    color-scheme: dark;
+    --bg: #0b1120;
+    --bg-soft: #0f1a2d;
+    --surface: #142137;
+    --text: #f8fafc;
+    --muted: #a8b3c7;
+    --primary: #073bd6;
+    --primary-dark: #3054c0;
+    --border: #29374d;
+    --shadow: 0 20px 55px rgba(0, 0, 0, 0.25);
+}
+
+body[data-theme="light"] {
     color-scheme: light;
     --bg: #ffffff;
     --bg-soft: #f5f7fb;
     --surface: #ffffff;
     --text: #101828;
-    --muted: #667085;
+    --muted: #000308;
     --primary: #071879;
     --primary-dark: #0929e0;
     --border: #e4e7ec;
-    --shadow: 0 20px 55px rgba(16, 24, 40, .09);
-}
-
-body[data-theme="dark"] {
-    color-scheme: dark;
-    --bg: #071225;
-    --bg-soft: #0b1930;
-    --surface: #10213b;
-    --text: #f2f5fb;
-    --muted: #aab8cf;
-    --primary: #4d74e0;
-    --primary-dark: #9db8ff;
-    --border: #263955;
-    --shadow: 0 20px 55px rgba(0, 0, 0, .25);
+    --shadow: 0 20px 55px rgba(16, 24, 40, 0.09);
 }
 
 * {
