@@ -72,8 +72,10 @@ textarea {
 .header {
     position: sticky;
     top: 0;
-    z-index: 1000;
-    background: var(--bg);
+    z-index: 100;
+    background: var(--bg 0.82);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
 }
 
@@ -128,10 +130,21 @@ textarea {
     transition: color .2s ease;
 }
 
+.m-hide {
+    padding: 7px 15px;
+    border: 2px solid blue;
+    border-radius: 30px;
+}
+
 .nav a:hover,
 .nav a.active-link,
 .social-links a:hover {
     color: var(--primary);
+    transition: 2s;
+}
+
+.social-links a:hover {
+    text-decoration: underline;
 }
 
 .nav-btn {
@@ -248,6 +261,11 @@ textarea {
     margin-bottom: 34px;
 }
 
+.secondary:hover {
+    border: 1px solid var(--muted);
+    transition: 2s;
+}
+
 .btn {
     display: inline-flex;
     align-items: center;
@@ -305,6 +323,10 @@ textarea {
     border-radius: 46% 46% 22px 22px;
     background: var(--bg-soft);
     box-shadow: var(--shadow);
+    border-top: 2px solid burlywood;
+    border-bottom: 2px solid green;
+    border-left: 2px solid rgba(167, 243, 208, .5);
+    border-right: 2px solid blue;
 }
 
 .image-box img {
@@ -557,7 +579,7 @@ textarea {
 }
 
 .project-content > span {
-    color: var(--primary);
+    color: var(--muted);
     font-size: 10px;
     letter-spacing: 1.5px;
     font-weight: 800;
@@ -828,6 +850,26 @@ textarea {
     background: rgba(255, 255, 255, .1);
 }
 
+/* back up button */
+
+.back-up  {
+   text-decoration: none;
+   padding: 10px 20px;
+   border: 2px solid #163caa;
+    display: block;
+        background-color: var(--bg);
+        color: var(--text);
+        width: 15%;
+        margin: 30px auto !important;
+        flex-shrink: 0;
+        opacity: 1;
+        visibility: visible;
+        text-align: center;
+        border-radius: 50px;
+        font-weight: 700;
+        text-decoration: none;
+}
+
 /* ==============================
    FOOTER
 ============================== */
@@ -896,7 +938,7 @@ textarea {
     }
 
     .nav a {
-        font-size: 13px;
+        font-size: 17px;
     }
 
     .hero-content {
@@ -952,26 +994,50 @@ textarea {
         font-size: 12px;
     }
 
-    .order-btn {
+    .m-hide {
+        display: none;
+    }
+
+    .intouch {
         display: block;
         width: fit-content;
-        padding: 12px 24px;
-        margin: 10px auto !important;
+        padding: 7px 24px;
+        margin: 3px auto !important;
         flex-shrink: 0;
         background-color: #052c6b;
         color: #ffffff !important;
         opacity: 1;
         visibility: visible;
         text-align: center;
-        border-radius: 8px;
+        border-radius: 50px;
         font-weight: 700;
         text-decoration: none;
     }
 
-    .order-btn:hover {
+
+    .upwork {
+        display: block;
+        background-color: var(--bg);
+        color: var(--text);
+        border: 2px solid blue;
+        width: fit-content;
+        padding: 7px 24px;
+        margin: 3px auto !important;
+        flex-shrink: 0;
+        opacity: 1;
+        visibility: visible;
+        text-align: center;
+        border-radius: 50px;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .intouch:hover {
         background-color: #051535;
         transition: background-color .3s ease;
     }
+
+    
 
     .theme-toggle {
         padding: 5px 12px;
@@ -1029,6 +1095,10 @@ textarea {
 
     .contact-form {
         padding: 25px;
+    }
+
+    .back-up {
+        width: 80%;
     }
 }
 
